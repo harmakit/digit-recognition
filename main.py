@@ -1,5 +1,4 @@
 import os
-import sys
 
 # suppress rebuild TensorFlow warnings >>>
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'

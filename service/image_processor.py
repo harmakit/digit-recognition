@@ -17,8 +17,8 @@ class ImageProcessor:
 
     @staticmethod
     def apply_morphology(image):
-        kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (5, 5))
-        return cv2.morphologyEx(image, cv2.MORPH_CLOSE, kernel)
+        kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (3, 3))
+        return cv2.morphologyEx(image, cv2.MORPH_OPEN, kernel)
 
     @staticmethod
     def resize_and_crop(image):
@@ -38,6 +38,7 @@ class ImageProcessor:
         image = self.grayscale(image)
         image = self.binarize(image)
         image = self.filter(image)
+        image = self.resize_and_crop(image)
         image = self.apply_morphology(image)
         image = self.resize_and_crop(image)
         image = self.invert(image)
