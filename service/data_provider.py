@@ -10,6 +10,11 @@ class DataProviderSource(Enum):
     DATADIR = 1
 
 
+class DataProviderAlgorithm(Enum):
+    AVG = 0
+    CUMULATIVE = 1
+
+
 DATADIR = os.path.dirname(os.path.abspath(__file__)) + "/../data"
 
 
@@ -17,13 +22,17 @@ class DataProvider:
     digits_data: list[list[int, np.ndarray]]
     avg_digits_data: dict[int, np.ndarray]
 
-    def __init__(self, source: DataProviderSource):
+    def __init__(self, source: DataProviderSource, algorithm: DataProviderAlgorithm = DataProviderAlgorithm.CUMULATIVE):
         switcher = {
             DataProviderSource.MNIST: self.__load_mnist,
             DataProviderSource.DATADIR: self.__load_datadir
         }
         self.digits_data = switcher.get(source)()
-        self.avg_digits_data = self.__init_avg_digits_data()
+        switcher = {
+            DataProviderAlgorithm.AVG: self.__init_avg_digits_data,
+            DataProviderAlgorithm.CUMULATIVE: self.__init_cumulative_digits_data
+        }
+        self.avg_digits_data = switcher.get(algorithm)()
 
     @staticmethod
     def __load_mnist() -> list[list[int, np.ndarray]]:
@@ -43,16 +52,35 @@ class DataProvider:
                 digits_data.append([i, digit_data])
         return digits_data
 
-    def __init_avg_digits_data(self) -> dict[int, np.ndarray]:
+    # cumulative method
+    def __init_cumulative_digits_data(self) -> dict[int, np.ndarray]:
         avg_digit_data = {}
         for i in range(len(self.digits_data)):
             digit = self.digits_data[i][0]
-            current_avg_digit_data = avg_digit_data.get(digit, self.digits_data[i][1])
+            current_avg_digit_data = avg_digit_data.get(digit, np.zeros((28, 28)))
             avg_digit_data[digit] = (current_avg_digit_data + self.digits_data[i][1]) / 2
 
         return dict(sorted(avg_digit_data.items()))
 
-    def get_avg_digits_data(self, show_plot=False) -> dict[int, np.ndarray]:
+    # average method
+    def __init_avg_digits_data(self) -> dict[int, np.ndarray]:
+        avg_digit_data = {}
+        lengths = [0] * 10
+        for i in range(len(self.digits_data)):
+            digit = self.digits_data[i][0]
+            current_avg_digit_data = avg_digit_data.get(digit, np.zeros((28, 28)))
+            avg_digit_data[digit] = current_avg_digit_data + self.digits_data[i][1]
+            lengths[digit] += 1
+
+        for i in range(10):
+            # calc average
+            avg_digit_data[i] = avg_digit_data[i] / lengths[i]
+            # convert to uint8
+            avg_digit_data[i] = avg_digit_data[i].astype(np.uint8)
+
+        return dict(sorted(avg_digit_data.items()))
+
+    def get_digits_models_data(self, show_plot=False) -> dict[int, np.ndarray]:
         if show_plot:
             # multiple plot the average digit data
             fig, axs = plt.subplots(2, 5)

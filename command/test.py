@@ -4,7 +4,7 @@ from service.data_provider import DataProvider
 
 def test(dp: DataProvider, guesser: GuesserInterface):
     # test the guesser with random mnist digits
-    digits_model = dp.get_avg_digits_data()
+    digits_model = dp.get_digits_models_data()
     tests_len = 1000
     correct_guesses = 0
     for i in range(tests_len):
