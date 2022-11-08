@@ -46,9 +46,9 @@ I implemented this step in two ways:
 
 
 **Avg sum of all pixels**  
-- Sum all pixels from all images and divide by number of images.
+> This algorithm cannot be chosen from menu. If you want to try this algorithm, pass DataProviderAlgorithm.AVG as a second argument to DataProvider constructor
 
-> note: This algorithm cannot be chosen from menu. If you want to try this algorithm, pass DataProviderAlgorithm.AVG as a second argument to DataProvider constructor
+- Sum all pixels from all images and divide by number of images.
 
 ![](readme/avg_model.gif)
 
