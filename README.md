@@ -3,7 +3,7 @@
 ## Installation
 
 ```bash
-$ git clone git@github.com:harmakit/digit-recognition.git
+$ git clone https://github.com/harmakit/digit-recognition.git
 $ cd digit-recognition
 $ pip install -r requirements.txt
 ```
@@ -11,7 +11,7 @@ $ pip install -r requirements.txt
 ## Run
 
 ```bash
-$ python3 main.py
+$ python main.py
 ```
 
 ## Algorithm
@@ -35,6 +35,8 @@ $ python3 main.py
 ![](readme/digits/8.gif)
 
 ### Step 2. Combine pixel data from all images
+I implemented this step in two ways:
+
 **Cumulative sum of all pixels**  
 - Stating with the first image, for each pixel, add the value of the pixel to the value of the same pixel in the next image.  
 - Then divide by 2. 
@@ -46,7 +48,7 @@ $ python3 main.py
 **Avg sum of all pixels**  
 - Sum all pixels from all images and divide by number of images.
 
-`note: This algorithm cannot be chosen from menu. If you want to try this algorithm, pass DataProviderAlgorithm.AVG as an argument to DataProvider constructor`
+> note: This algorithm cannot be chosen from menu. If you want to try this algorithm, pass DataProviderAlgorithm.AVG as a second argument to DataProvider constructor
 
 ![](readme/avg_model.gif)
 
@@ -78,7 +80,7 @@ Choose data source
 Guessed digit: 7 with confidence: 91.88352147499624
 ```
 
-Updating data models from images
+Updating data models from images in "data/orig" directory
 
 ```bash
 Choose action                                                                                                                                                                                             
@@ -99,7 +101,9 @@ Updated digit 9 with 10 images
 Updated data
 ```
 
-Running tests (randomly chosen digit from model to be recognized)
+Running tests (randomly chosen digit from model to be recognized at each iteration)
+
+```bash
 
 ```bash
 Choose action                                                                                                                                                                                             
