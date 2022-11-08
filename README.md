@@ -46,7 +46,6 @@ I implemented this step in two ways:
 
 
 **Avg sum of all pixels**  
-> This algorithm cannot be chosen from menu. If you want to try this algorithm, pass DataProviderAlgorithm.AVG as a second argument to DataProvider constructor
 
 - Sum all pixels from all images and divide by number of images.
 
@@ -67,7 +66,8 @@ Guessing digit from image
 ![](digit.png)
 
 ```bash
-$ python3 main.py
+$ python main.py
+
 Choose action                                                                                                                                                                                             
 > [r] run recognizer                                                                                                                                                                                      
   [t] test recognizer                                                                                                                                                                                     
@@ -77,12 +77,18 @@ Choose data source
 > [d] data dir                                                                                                                                                                                            
   [m] mnist dataset  
   
-Guessed digit: 7 with confidence: 91.88352147499624
+Choose data provider algorithm                                                                                                                                                                            
+> [c] cumulative                                                                                                                                                                                          
+  [a] average  
+  
+Guessed digit: 7 with confidence: 91.88
 ```
 
 Updating data models from images in "data/orig" directory
 
 ```bash
+$ python main.py
+
 Choose action                                                                                                                                                                                             
   [r] run recognizer                                                                                                                                                                                      
   [t] test recognizer                                                                                                                                                                                     
@@ -106,6 +112,8 @@ Running tests (randomly chosen digit from model to be recognized at each iterati
 ```bash
 
 ```bash
+$ python main.py
+
 Choose action                                                                                                                                                                                             
   [r] run recognizer                                                                                                                                                                                      
 > [t] test recognizer                                                                                                                                                                                     
@@ -113,7 +121,11 @@ Choose action
 
 Choose data source                                                                                                                                                                                        
 > [d] data dir                                                                                                                                                                                            
-  [m] mnist dataset        
+  [m] mnist dataset      
+  
+Choose data provider algorithm                                                                                                                                                                            
+> [c] cumulative                                                                                                                                                                                          
+  [a] average   
 
 Guessed 712 out of 1000 digits correctly. Accuracy: 71.2%
 ```

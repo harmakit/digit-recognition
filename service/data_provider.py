@@ -2,7 +2,7 @@ import os
 from enum import Enum
 import numpy as np
 from matplotlib import pyplot as plt
-from tensorflow import keras
+from mnist import MNIST
 
 
 class DataProviderSource(Enum):
@@ -22,7 +22,7 @@ class DataProvider:
     digits_data: list[list[int, np.ndarray]]
     avg_digits_data: dict[int, np.ndarray]
 
-    def __init__(self, source: DataProviderSource, algorithm: DataProviderAlgorithm = DataProviderAlgorithm.CUMULATIVE):
+    def __init__(self, source: DataProviderSource, algorithm: DataProviderAlgorithm):
         switcher = {
             DataProviderSource.MNIST: self.__load_mnist,
             DataProviderSource.DATADIR: self.__load_datadir
@@ -36,11 +36,15 @@ class DataProvider:
 
     @staticmethod
     def __load_mnist() -> list[list[int, np.ndarray]]:
-        (_, _), (x_test, y_test) = keras.datasets.mnist.load_data()
+        mnist_data = MNIST(f'{DATADIR}/mnist')
+        images, labels = mnist_data.load_testing()
+
         digits_data = []
-        for i in range(len(x_test)):
-            digit = y_test[i]
-            digits_data.append([digit, x_test[i]])
+        for i in range(len(images)):
+            digit = labels[i]
+            # convert to numpy 28x28 array
+            digit_data = np.array(images[i]).reshape((28, 28))
+            digits_data.append([digit, digit_data])
         return digits_data
 
     @staticmethod
