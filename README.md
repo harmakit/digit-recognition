@@ -71,6 +71,12 @@ There are multiple algorithms to compare images:
 - Use a bunch of classifiers (KNN, SVC, GB, DT) to classify the mean value
 - Return most common prediction
 
+#### Haar features
+- Iterate over the image with a sliding window of 2x2 pixels
+- Extract vertical and horizontal features from the image
+- Use a bunch of classifiers (KNN, SVC, GB, DT) to classify the features
+- Return most common prediction
+
 
 ## Example
 
@@ -98,6 +104,7 @@ Choose data provider algorithm
 Choose guesser algorithm                                                                                                                                                    
 > [d] diff - comparing by pixel value                                                                                                                                       
   [m] mean – mean in window feature 
+  [h] haar features
   
 Guessed digit: 7 with confidence: 91.88
 ```
@@ -149,7 +156,8 @@ Choose data provider algorithm
   
 Choose guesser algorithm                                                                                                                                                    
 > [d] diff - comparing by pixel value                                                                                                                                       
-  [m] mean – mean in window feature     
+  [m] mean – mean in window feature  
+  [h] haar features     
 
 Guessed 712 out of 1000 digits correctly. Accuracy: 71.2%
 ```

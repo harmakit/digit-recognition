@@ -14,7 +14,7 @@ data_sources_menu = TerminalMenu(data_sources, title="Choose data source")
 data_algorithms = ["[a] average", "[c] cumulative"]
 data_algorithms_menu = TerminalMenu(data_algorithms, title="Choose data provider algorithm")
 
-guesser_algorithms = ["[d] diff - comparing by pixel value", "[m] mean – mean in window feature"]
+guesser_algorithms = ["[d] diff - comparing by pixel value", "[m] mean – mean in window feature", "[h] haar features"]
 guesser_algorithms_menu = TerminalMenu(guesser_algorithms, title="Choose guesser algorithm")
 
 while True:
@@ -47,6 +47,8 @@ while True:
             guesser = guesser_factory.get_guesser(GuesserType.DIFF)
         elif guesser_algorithm_index == 1:
             guesser = guesser_factory.get_guesser(GuesserType.MEAN)
+        elif guesser_algorithm_index == 2:
+            guesser = guesser_factory.get_guesser(GuesserType.HAAR)
         else:
             exit('Invalid guesser algorithm')
 
