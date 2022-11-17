@@ -1,4 +1,4 @@
-# Simple digit recognition algorithm
+# Digit recognition algorithms
 
 ## Installation
 
@@ -56,7 +56,20 @@ I implemented this step in two ways:
 
 - Load image to recognize from "digit.png" in project root
 - Preprocess image
-- Find the difference between the image to recognize and each digit in model
+
+### Step 4. Compare image with models  
+There are multiple algorithms to compare images:  
+
+#### Diff  
+
+- Calculate difference between image and models pixel by pixel
+- Return the model with the lowest difference
+
+#### Mean in window
+- Iterate over the image with a sliding window of 2x2 pixels
+- Calculate the mean of the pixels in the window
+- Use a bunch of classifiers (KNN, SVC, GB, DT) to classify the mean value
+- Return most common prediction
 
 
 ## Example
@@ -68,10 +81,11 @@ Guessing digit from image
 ```bash
 $ python main.py
 
-Choose action                                                                                                                                                                                             
-> [r] run recognizer                                                                                                                                                                                      
-  [t] test recognizer                                                                                                                                                                                     
-  [u] update data from images   
+Choose action                                                                                                                                                               
+> [r] run recognizer                                                                                                                                                        
+  [t] test recognizer                                                                                                                                                       
+  [u] update data from images                                                                                                                                               
+  [e] exit    
   
 Choose data source                                                                                                                                                                                        
 > [d] data dir                                                                                                                                                                                            
@@ -80,6 +94,10 @@ Choose data source
 Choose data provider algorithm                                                                                                                                                                            
 > [c] cumulative                                                                                                                                                                                          
   [a] average  
+  
+Choose guesser algorithm                                                                                                                                                    
+> [d] diff - comparing by pixel value                                                                                                                                       
+  [m] mean – mean in window feature 
   
 Guessed digit: 7 with confidence: 91.88
 ```
@@ -93,7 +111,8 @@ Choose action
   [r] run recognizer                                                                                                                                                                                      
   [t] test recognizer                                                                                                                                                                                     
 > [u] update data from images    
-
+  [e] exit    
+  
 Updated digit 0 with 10 images
 Updated digit 1 with 10 images
 Updated digit 2 with 10 images
@@ -118,7 +137,8 @@ Choose action
   [r] run recognizer                                                                                                                                                                                      
 > [t] test recognizer                                                                                                                                                                                     
   [u] update data from images  
-
+  [e] exit    
+  
 Choose data source                                                                                                                                                                                        
 > [d] data dir                                                                                                                                                                                            
   [m] mnist dataset      
@@ -126,6 +146,10 @@ Choose data source
 Choose data provider algorithm                                                                                                                                                                            
 > [c] cumulative                                                                                                                                                                                          
   [a] average   
+  
+Choose guesser algorithm                                                                                                                                                    
+> [d] diff - comparing by pixel value                                                                                                                                       
+  [m] mean – mean in window feature     
 
 Guessed 712 out of 1000 digits correctly. Accuracy: 71.2%
 ```

@@ -17,7 +17,8 @@ def run(dp: DataProvider, guesser: GuesserInterface):
     image_processor = ImageProcessor()
     image_data = image_processor.get_image(file_path)
 
+    guesser.prepare(digits_model)
     guessed_digit, guessed_digit_confidence = guesser.guess(image_data, digits_model)
     guessed_digit_confidence = round(guessed_digit_confidence, 2)
 
-    print(f"Guessed digit: {guessed_digit} with confidence: {guessed_digit_confidence}")
+    print(f"Guessed digit: {guessed_digit} with confidence: {guessed_digit_confidence}%")
