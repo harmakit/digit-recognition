@@ -12,13 +12,16 @@ def run(dp: DataProvider, guesser: GuesserInterface):
         print("File digit.png not found. Please place it in the root directory of the project.")
         return
 
-    digits_model = dp.get_digits_models_data()
+    if guesser.__class__.__name__ == "DiffGuesser":
+        digits_model = dp.get_compiled_digits_models_data()
+    else:
+        digits_model = dp.get_digits_models_data()
+    guesser.prepare(digits_model)
 
     image_processor = ImageProcessor()
     image_data = image_processor.get_image(file_path)
 
-    guesser.prepare(digits_model)
-    guessed_digit, guessed_digit_confidence = guesser.guess(image_data, digits_model)
+    guessed_digit, guessed_digit_confidence = guesser.guess(image_data)
     guessed_digit_confidence = round(guessed_digit_confidence, 2)
 
     print(f"Guessed digit: {guessed_digit} with confidence: {guessed_digit_confidence}%")

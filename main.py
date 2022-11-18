@@ -23,8 +23,8 @@ while True:
     if menu_entry_index == 3:
         exit()
 
-    data_provider_source = DataProviderSource.MNIST
-    data_provider_algorithm = DataProviderAlgorithm.CUMULATIVE
+    data_provider_source = None
+    data_provider_algorithm = None
 
     guesser_factory = GuesserFactory()
     guesser = None
@@ -35,12 +35,8 @@ while True:
             data_provider_source = DataProviderSource.DATADIR
         elif data_source_index == 1:
             data_provider_source = DataProviderSource.MNIST
-
-        data_algorithm_index = data_algorithms_menu.show()
-        if data_algorithm_index == 0:
-            data_provider_algorithm = DataProviderAlgorithm.AVG
-        elif data_algorithm_index == 1:
-            data_provider_algorithm = DataProviderAlgorithm.CUMULATIVE
+        else:
+            exit('Invalid data source')
 
         guesser_algorithm_index = guesser_algorithms_menu.show()
         if guesser_algorithm_index == 0:
@@ -51,6 +47,14 @@ while True:
             guesser = guesser_factory.get_guesser(GuesserType.HAAR)
         else:
             exit('Invalid guesser algorithm')
+
+        data_provider_algorithm = None
+        if guesser_algorithm_index == 0:
+            data_algorithm_index = data_algorithms_menu.show()
+            if data_algorithm_index == 0:
+                data_provider_algorithm = DataProviderAlgorithm.AVG
+            elif data_algorithm_index == 1:
+                data_provider_algorithm = DataProviderAlgorithm.CUMULATIVE
 
     dp = DataProvider(data_provider_source, data_provider_algorithm)
 

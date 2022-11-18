@@ -7,7 +7,7 @@ class MeanFeaturesGuesser(GuesserInterface):
         self.classifiers = classifiers
         self.models = {}
 
-    def guess(self, unknown_digit_data: np.ndarray, digits_model: dict[int, np.ndarray]) -> (int, float):
+    def guess(self, unknown_digit_data: np.ndarray) -> (int, float):
         unknown_digit_features = self.get_features(unknown_digit_data)
 
         predictions = []
@@ -21,14 +21,20 @@ class MeanFeaturesGuesser(GuesserInterface):
 
     def prepare(self, digits_model: dict[int, np.ndarray]):
         models = {}
-        features = {}
+
+        x = []
+        y = []
 
         for digit in digits_model:
-            features[digit] = self.get_features(digits_model[digit])
-        features = np.array(list(features.values()))
+            for digit_data in digits_model[digit]:
+                x.append(self.get_features(digit_data))
+                y.append(digit)
+
+        x = np.array(x)
+        y = np.array(y)
 
         for classifier in self.classifiers:
-            models[classifier.__class__.__name__] = classifier.fit(features, list(digits_model.keys()))
+            models[classifier.__class__.__name__] = classifier.fit(x, y)
 
         self.models = models
 

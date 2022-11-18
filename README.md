@@ -29,13 +29,11 @@ $ python main.py
 - - Resize to 28x28
 - - Apply opening to remove noise
 - - Save to "data/converted" directory
-- Save processed pixels data to "data/npy" directory
 
 ![](readme/digits/7.gif)
 ![](readme/digits/8.gif)
-
-### Step 2. Combine pixel data from all images
-I implemented this step in two ways:
+### (Optional) Step 1.1 Combine pixel data from all images  
+#### This step is needed for "Diff" algorithm only and can be done in two ways:
 
 **Cumulative sum of all pixels**  
 - Stating with the first image, for each pixel, add the value of the pixel to the value of the same pixel in the next image.  
@@ -96,15 +94,15 @@ Choose action
 Choose data source                                                                                                                                                                                        
 > [d] data dir                                                                                                                                                                                            
   [m] mnist dataset  
-  
-Choose data provider algorithm                                                                                                                                                                            
-> [c] cumulative                                                                                                                                                                                          
-  [a] average  
-  
+
 Choose guesser algorithm                                                                                                                                                    
 > [d] diff - comparing by pixel value                                                                                                                                       
   [m] mean – mean in window feature 
   [h] haar features
+    
+Choose data provider algorithm                                                                                                                                                                            
+> [c] cumulative                                                                                                                                                                                          
+  [a] average  
   
 Guessed digit: 7 with confidence: 91.88
 ```
@@ -149,15 +147,15 @@ Choose action
 Choose data source                                                                                                                                                                                        
 > [d] data dir                                                                                                                                                                                            
   [m] mnist dataset      
+
+Choose guesser algorithm                                                                                                                                                    
+> [d] diff - comparing by pixel value                                                                                                                                       
+  [m] mean – mean in window feature  
+  [h] haar features     
   
 Choose data provider algorithm                                                                                                                                                                            
 > [c] cumulative                                                                                                                                                                                          
   [a] average   
   
-Choose guesser algorithm                                                                                                                                                    
-> [d] diff - comparing by pixel value                                                                                                                                       
-  [m] mean – mean in window feature  
-  [h] haar features     
-
 Guessed 712 out of 1000 digits correctly. Accuracy: 71.2%
 ```
