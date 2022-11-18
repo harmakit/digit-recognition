@@ -56,6 +56,9 @@ while True:
             elif data_algorithm_index == 1:
                 data_provider_algorithm = DataProviderAlgorithm.CUMULATIVE
 
+    if menu_entry_index == 2:
+        data_provider_source = DataProviderSource.DATADIR
+
     dp = DataProvider(data_provider_source, data_provider_algorithm)
 
     if menu_entry_index == 0:  # run
