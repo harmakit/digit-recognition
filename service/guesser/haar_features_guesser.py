@@ -14,7 +14,7 @@ class HaarFeaturesGuesser(GuesserInterface):
         for model in self.models:
             predictions.append(self.models[model].predict([unknown_digit_features]))
 
-        guessed_digit = max(predictions, key=predictions.count)
+        guessed_digit = max(predictions, key=predictions.count)[0]
         guessed_digit_confidence = predictions.count(guessed_digit) / len(predictions) * 100
 
         return guessed_digit, guessed_digit_confidence
