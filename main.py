@@ -74,7 +74,7 @@ while True:
     elif menu_entry_index == 1:  # test
         for guesser in guessers:
             print(guesser.__class__.__name__ + ':')
-            run(dp, guesser)
+            test(dp, guesser)
             print('')
     elif menu_entry_index == 2:  # update
         update()

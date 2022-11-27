@@ -2,21 +2,32 @@ from interface.guesser import GuesserInterface
 from service.data_provider import DataProvider
 
 
+SAMPLE_RATE = 0.1
+
 def test(dp: DataProvider, guesser: GuesserInterface):
     if guesser.__class__.__name__ == "DiffGuesser":
         digits_model = dp.get_compiled_digits_models_data()
     else:
         digits_model = dp.get_digits_models_data()
-    guesser.prepare(digits_model)
 
-    tests_len = 100
+    train_digits_model = {}
+    test_digits_model = {}
+
+    for digit in digits_model:
+        train_digits_model[digit] = digits_model[digit][:int(len(digits_model[digit]) * SAMPLE_RATE)]
+        test_digits_model[digit] = digits_model[digit][int(len(digits_model[digit]) * SAMPLE_RATE):]
+
+    guesser.prepare(train_digits_model)
+
+    tests_count = 0
     correct_guesses = 0
-    for i in range(tests_len):
-        random_digit_data, random_digit = dp.get_random_digit_data()
-        guessed_digit, guessed_digit_confidence = guesser.guess(random_digit_data)
-        if guessed_digit == random_digit:
-            correct_guesses += 1
+    for digit in test_digits_model:
+        for digit_data in test_digits_model[digit]:
+            tests_count += 1
+            guess, _ = guesser.guess(digit_data)
+            if guess == digit:
+                correct_guesses += 1
 
     print(
-        f"Guessed {correct_guesses} out of {tests_len} digits correctly. Accuracy: {correct_guesses / tests_len * 100}%")
+        f"Guessed {correct_guesses} out of {tests_count} digits correctly. Accuracy: {correct_guesses / tests_count * 100}%")
     pass

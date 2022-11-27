@@ -113,16 +113,3 @@ class DataProvider:
                     axs[i, j].imshow(self.compiled_digits_data[digit], cmap='gray')
             plt.show()
         return self.compiled_digits_data
-
-    def get_random_digit_data(self, show_plot=False) -> (np.ndarray, int):
-        random_index = np.random.randint(0, len(self.digits_data))
-        random_digit = self.digits_data[random_index][0]
-        random_digit_data = self.digits_data[random_index][1]
-
-        if show_plot:
-            title = f'Random Digit Data: {random_digit}'
-            plt.title(title)
-            plt.imshow(random_digit_data, cmap='gray')
-            plt.show()
-
-        return random_digit_data, random_digit
