@@ -2,6 +2,7 @@ from enum import Enum
 from service.guesser.diff_guesser import DiffGuesser
 from service.guesser.haar_features_guesser import HaarFeaturesGuesser
 from service.guesser.mean_features_guesser import MeanFeaturesGuesser
+from service.guesser.knn_features_guesser import KnnFeaturesGeusser
 from sklearn.svm import SVC
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import GradientBoostingClassifier
@@ -12,6 +13,7 @@ class GuesserType(Enum):
     DIFF = 0
     MEAN = 1
     HAAR = 2
+    KNN = 3
 
 
 class GuesserFactory:
@@ -22,11 +24,14 @@ class GuesserFactory:
         DecisionTreeClassifier()
     ]
 
+
+
     def get_guesser(self, guesser_type: GuesserType):
         switcher = {
             GuesserType.DIFF: self.__get_diff_guesser,
             GuesserType.MEAN: self.__get_mean_features_guesser,
-            GuesserType.HAAR: self.__get_haar_features_guesser
+            GuesserType.HAAR: self.__get_haar_features_guesser,
+            GuesserType.KNN: self.__get_knn_geusser
         }
         return switcher.get(guesser_type)()
 
@@ -39,3 +44,5 @@ class GuesserFactory:
 
     def __get_haar_features_guesser(self):
         return HaarFeaturesGuesser(self.feature_methods_classifiers)
+    def __get_knn_geusser():
+        return KnnFeaturesGeusser()

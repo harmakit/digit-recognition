@@ -5,7 +5,7 @@ from service.data_provider import DataProvider
 SAMPLE_RATE = 0.1
 
 def test(dp: DataProvider, guesser: GuesserInterface):
-    if guesser.__class__.__name__ == "DiffGuesser":
+    if guesser.__class__.__name__ == "KnnFeaturesGeusser":
         digits_model = dp.get_compiled_digits_models_data()
     else:
         digits_model = dp.get_digits_models_data()
