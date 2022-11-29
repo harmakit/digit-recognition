@@ -1,11 +1,8 @@
 from enum import Enum
+from service.classifier.knn import KNeighborsClassifier
 from service.guesser.diff_guesser import DiffGuesser
 from service.guesser.haar_features_guesser import HaarFeaturesGuesser
 from service.guesser.mean_features_guesser import MeanFeaturesGuesser
-from sklearn.svm import SVC
-from sklearn.tree import DecisionTreeClassifier
-from sklearn.ensemble import GradientBoostingClassifier
-from sklearn.neighbors import KNeighborsClassifier
 
 
 class GuesserType(Enum):
@@ -17,9 +14,6 @@ class GuesserType(Enum):
 class GuesserFactory:
     feature_methods_classifiers = [
         KNeighborsClassifier(),
-        GradientBoostingClassifier(),
-        SVC(),
-        DecisionTreeClassifier()
     ]
 
     def get_guesser(self, guesser_type: GuesserType):

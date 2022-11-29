@@ -1,8 +1,8 @@
 from interface.guesser import GuesserInterface
 from service.data_provider import DataProvider
 
-
 SAMPLE_RATE = 0.1
+
 
 def test(dp: DataProvider, guesser: GuesserInterface):
     if guesser.__class__.__name__ == "DiffGuesser":
@@ -14,8 +14,8 @@ def test(dp: DataProvider, guesser: GuesserInterface):
     test_digits_model = {}
 
     for digit in digits_model:
-        train_digits_model[digit] = digits_model[digit][:int(len(digits_model[digit]) * SAMPLE_RATE)]
-        test_digits_model[digit] = digits_model[digit][int(len(digits_model[digit]) * SAMPLE_RATE):]
+        test_digits_model[digit] = digits_model[digit][:int(len(digits_model[digit]) * SAMPLE_RATE)]
+        train_digits_model[digit] = digits_model[digit][int(len(digits_model[digit]) * SAMPLE_RATE):]
 
     guesser.prepare(train_digits_model)
 
