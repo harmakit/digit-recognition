@@ -5,17 +5,17 @@ SAMPLE_RATE = 0.1
 
 
 def test(dp: DataProvider, guesser: GuesserInterface):
-    if guesser.__class__.__name__ == "DiffGuesser":
-        digits_model = dp.get_compiled_digits_models_data()
-    else:
-        digits_model = dp.get_digits_models_data()
-
     train_digits_model = {}
     test_digits_model = {}
 
-    for digit in digits_model:
-        test_digits_model[digit] = digits_model[digit][:int(len(digits_model[digit]) * SAMPLE_RATE)]
-        train_digits_model[digit] = digits_model[digit][int(len(digits_model[digit]) * SAMPLE_RATE):]
+    if guesser.__class__.__name__ == "DiffGuesser":
+        train_digits_model = dp.get_compiled_digits_models_data()
+        test_digits_model = dp.get_digits_models_data()
+    else:
+        digits_model = dp.get_digits_models_data()
+        for digit in digits_model:
+            test_digits_model[digit] = digits_model[digit][:int(len(digits_model[digit]) * SAMPLE_RATE)]
+            train_digits_model[digit] = digits_model[digit][int(len(digits_model[digit]) * SAMPLE_RATE):]
 
     guesser.prepare(train_digits_model)
 

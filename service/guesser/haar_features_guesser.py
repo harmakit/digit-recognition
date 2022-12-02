@@ -5,14 +5,13 @@ from interface.guesser import GuesserInterface
 class HaarFeaturesGuesser(GuesserInterface):
     def __init__(self, classifiers: list):
         self.classifiers = classifiers
-        self.models = {}
 
     def guess(self, unknown_digit_data: np.ndarray) -> (int, float):
         unknown_digit_features = self.get_features(unknown_digit_data)
 
         predictions = []
-        for model in self.models:
-            predictions.append(self.models[model].predict([unknown_digit_features]))
+        for classifier in self.classifiers:
+            predictions.append(classifier.predict([unknown_digit_features]))
 
         guessed_digit = max(predictions, key=predictions.count)[0]
         guessed_digit_confidence = predictions.count(guessed_digit) / len(predictions) * 100
@@ -20,8 +19,6 @@ class HaarFeaturesGuesser(GuesserInterface):
         return guessed_digit, guessed_digit_confidence
 
     def prepare(self, digits_model: dict[int, np.ndarray]):
-        models = {}
-
         x = []
         y = []
 
@@ -34,9 +31,7 @@ class HaarFeaturesGuesser(GuesserInterface):
         y = np.array(y)
 
         for classifier in self.classifiers:
-            models[classifier.__class__.__name__] = classifier.fit(x, y)
-
-        self.models = models
+            classifier.fit(x, y)
 
     @staticmethod
     def get_features(digit_data: np.ndarray) -> np.ndarray:

@@ -22,10 +22,9 @@ class KNeighborsClassifier(ClassifierInterface):
         self.x_train = None
         self.y_train = None
 
-    def fit(self, x_train: np.ndarray, y_train: np.ndarray) -> ClassifierInterface:
+    def fit(self, x_train: np.ndarray, y_train: np.ndarray) -> None:
         self.x_train = x_train
         self.y_train = y_train
-        return self
 
     def predict(self, x_test: np.ndarray) -> list[int]:
         neighbors = []
